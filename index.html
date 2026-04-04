@@ -11,7 +11,7 @@
   <link rel="icon" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -19,9 +19,9 @@
         extend: {
           colors: {
             rose: { DEFAULT: '#8B5A6B', light: '#A8707F', dark: '#6E4755' },
-            gold: { DEFAULT: '#C9A96E', light: '#D4BC8E' },
+            paper: { DEFAULT: '#E8E4DC', warm: '#3A2F2B' },
             cream: { DEFAULT: '#FDFBF7', dark: '#F5F0E8' },
-            ink: { DEFAULT: '#2D2926', light: '#5C5552' },
+            ink: { DEFAULT: '#2D2926', light: '#5C5552', mute: '#6B5D52' },
           },
           fontFamily: {
             serif: ['Playfair Display', 'Georgia', 'serif'],
@@ -37,6 +37,13 @@
     .faq-answer.open { max-height: 200px; }
     .faq-chevron { transition: transform 0.3s ease; }
     .faq-chevron.open { transform: rotate(180deg); }
+    /* Paper texture for editorial sections */
+    .paper-bg {
+      background-color: #E8E4DC;
+      background-image:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='2.2' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.18  0 0 0 0 0.14  0 0 0 0 0.10  0 0 0 0.28 -0.08'/></filter><rect width='400' height='400' filter='url(%23n)'/></svg>"),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='f'><feTurbulence type='turbulence' baseFrequency='0.012 1.4' numOctaves='2' seed='9' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.22  0 0 0 0 0.18  0 0 0 0 0.12  0 0 0 0.10 -0.03'/></filter><rect width='600' height='600' filter='url(%23f)'/></svg>");
+    }
   </style>
   <script defer data-domain="toastjar.com" src="https://plausible.io/js/script.js"></script>
   <!-- Meta Pixel Code -->
@@ -60,37 +67,35 @@
 <body class="bg-cream font-sans text-ink">
 
   <!-- Nav -->
-  <nav class="fixed top-0 w-full bg-cream/90 backdrop-blur-sm z-50 border-b border-cream-dark">
+  <nav id="site-nav" class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent border-b border-transparent">
     <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="#" class="font-serif text-xl font-bold text-rose">Toastjar</a>
       <a href="#reserve" class="bg-rose text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-rose-dark transition-colors">
-        Reserve Your Date
+        Reserve your date
       </a>
     </div>
   </nav>
 
   <!-- Hero -->
-  <section class="pt-32 pb-20 px-6">
-    <div class="max-w-3xl mx-auto text-center">
-      <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-ink leading-tight mb-6">
-        Your guests have something to say to future you.
+  <section class="paper-bg pt-40 pb-32 px-6">
+    <div class="max-w-4xl mx-auto px-6 md:px-16">
+      <p class="text-xs font-sans tracking-[0.3em] text-ink-mute mb-12">A TIME CAPSULE FOR YOUR WEDDING</p>
+      <h1 class="font-serif font-light text-ink text-3xl md:text-5xl leading-[1.5] md:leading-[1.4] mb-12 max-w-3xl">
+        Your guests have something to say to <em class="text-rose not-italic md:italic">future you.</em>
       </h1>
-      <p class="text-lg md:text-xl text-ink-light max-w-2xl mx-auto mb-10 leading-relaxed">
-        Toastjar is a digital time capsule for your wedding. Guests scan a QR code, write a message, and you receive them on your 1st, 5th, and 10th anniversary. No app. No subscription. Just love, delivered across time.
+      <p class="text-base md:text-lg text-ink-mute max-w-xl leading-relaxed mb-10 font-light">
+        Toastjar is a digital time capsule for your wedding. Guests scan a QR code, write a message, and you receive them on your 1st, 5th, and 10th anniversary.
       </p>
-      <a href="#pricing" class="inline-block bg-rose text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-rose-dark transition-colors mb-4">
-        Start Your Time Capsule
+      <a href="#pricing" class="inline-block bg-rose text-white px-8 py-4 rounded-full text-base font-medium hover:bg-rose-dark transition-colors">
+        Start your time capsule
       </a>
-      <p class="text-sm text-ink-light">
-        No app download. Works on any phone. Takes guests 60 seconds.
-      </p>
     </div>
   </section>
 
   <!-- How It Works -->
-  <section class="py-20 px-6 bg-cream-dark">
+  <section class="py-24 px-6 bg-cream">
     <div class="max-w-5xl mx-auto">
-      <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-16">How it works</h2>
+      <h2 class="font-serif font-light text-3xl md:text-4xl text-center mb-20 text-ink">How it works</h2>
       <div class="grid md:grid-cols-3 gap-12 md:gap-8">
         <div class="text-center">
           <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-rose/10 flex items-center justify-center">
@@ -136,7 +141,7 @@
               <rect x="14.5" y="17.5" width="1" height="1"/>
             </svg>
           </div>
-          <div class="text-xs font-semibold uppercase tracking-widest text-gold mb-2">Step 1</div>
+          <div class="text-xs font-semibold uppercase tracking-widest text-rose mb-2">Step 1</div>
           <h3 class="font-serif text-xl font-semibold mb-3">Set up your capsule</h3>
           <p class="text-ink-light leading-relaxed">Pick your wedding date. We give you a QR code and a unique link to share with your guests.</p>
         </div>
@@ -144,7 +149,7 @@
           <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-rose/10 flex items-center justify-center">
             <svg class="w-5 h-5 text-rose" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
           </div>
-          <div class="text-xs font-semibold uppercase tracking-widest text-gold mb-2">Step 2</div>
+          <div class="text-xs font-semibold uppercase tracking-widest text-rose mb-2">Step 2</div>
           <h3 class="font-serif text-xl font-semibold mb-3">Guests write messages</h3>
           <p class="text-ink-light leading-relaxed">Place the QR code at your venue. Guests scan, pick an anniversary, write their message. No app, no signup.</p>
         </div>
@@ -152,7 +157,7 @@
           <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-rose/10 flex items-center justify-center">
             <svg class="w-5 h-5 text-rose" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
           </div>
-          <div class="text-xs font-semibold uppercase tracking-widest text-gold mb-2">Step 3</div>
+          <div class="text-xs font-semibold uppercase tracking-widest text-rose mb-2">Step 3</div>
           <h3 class="font-serif text-xl font-semibold mb-3">Messages arrive on your anniversary</h3>
           <p class="text-ink-light leading-relaxed">On your 1st, 5th, and 10th anniversary, a surprise email arrives with every message your guests left for you.</p>
         </div>
@@ -161,63 +166,65 @@
   </section>
 
   <!-- Emotional Differentiator -->
-  <section class="py-20 px-6">
-    <div class="max-w-2xl mx-auto text-center">
-      <h2 class="font-serif text-3xl md:text-4xl font-bold mb-6">More than a guest book.</h2>
-      <p class="text-lg text-ink-light leading-relaxed mb-6">
-        Guest books collect dust on a shelf. Toastjar delivers your loved ones' words at the exact moment you need to hear them. Years from now, when life is busy and your wedding day feels far away.
-      </p>
-      <p class="text-lg text-ink-light leading-relaxed">
-        Guests get curated prompts, not a blank page. That means real messages, not just "Congrats!"
+  <section class="paper-bg py-32 px-6">
+    <div class="max-w-4xl mx-auto px-6 md:px-16">
+      <p class="text-xs font-sans tracking-[0.3em] text-ink-mute mb-10">MORE THAN A GUEST BOOK</p>
+      <h2 class="font-serif font-light text-ink text-2xl md:text-4xl leading-[1.5] md:leading-[1.4] mb-10 max-w-3xl">
+        Guest books collect dust on a shelf. Toastjar delivers your loved ones' words at the exact moment you need to hear them, <em class="text-rose">years from now</em>.
+      </h2>
+      <p class="text-base md:text-lg text-ink-mute max-w-xl leading-relaxed font-light">
+        Guests get thoughtful prompts, not a blank page. That means real messages, not just "Congrats."
       </p>
     </div>
   </section>
 
   <!-- Couple-to-Couple -->
-  <section class="py-20 px-6 bg-cream-dark">
-    <div class="max-w-2xl mx-auto text-center">
-      <h2 class="font-serif text-3xl md:text-4xl font-bold mb-6">Write to each other, too.</h2>
-      <p class="text-lg text-ink-light leading-relaxed">
-        Before the ceremony, each of you writes a letter to the other, sealed until your anniversary.
+  <section class="paper-bg py-32 px-6 border-t border-ink-mute/10">
+    <div class="max-w-4xl mx-auto px-6 md:px-16">
+      <p class="text-xs font-sans tracking-[0.3em] text-ink-mute mb-10">AND FOR EACH OTHER</p>
+      <h2 class="font-serif font-light text-ink text-2xl md:text-4xl leading-[1.5] md:leading-[1.4] mb-10 max-w-3xl">
+        Before the ceremony, each of you writes a letter to the other, <em class="text-rose">sealed until your anniversary</em>.
+      </h2>
+      <p class="text-base md:text-lg text-ink-mute max-w-xl leading-relaxed font-light">
         Read the words you wrote on the day you said "I do," years after you said it.
       </p>
     </div>
   </section>
 
   <!-- Pricing -->
-  <section id="pricing" class="py-20 px-6">
+  <section id="pricing" class="py-24 px-6 bg-cream">
     <div class="max-w-md mx-auto">
-      <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-4">One payment. A decade of memories.</h2>
-      <p class="text-center text-ink-light mb-12">No subscriptions. No hidden fees.</p>
+      <h2 class="font-serif font-light text-3xl md:text-4xl text-center mb-4 text-ink">One payment. A decade of memories.</h2>
+      <p class="text-center text-ink-light mb-12 font-light">No subscriptions. No hidden fees.</p>
       <div class="bg-white rounded-2xl shadow-sm border border-cream-dark p-8 text-center">
         <div class="mb-1">
           <span class="font-serif text-5xl font-bold text-rose">$39</span>
           <span class="text-sm text-ink-light ml-1 line-through">$49</span>
         </div>
-        <p class="text-xs text-gold font-medium mb-8">Early bird pricing, limited spots</p>
+        <p class="text-xs text-rose font-medium mb-8 tracking-wider">EARLY ACCESS PRICING</p>
         <ul class="text-left space-y-3 mb-8">
           <li class="flex items-start gap-3">
-            <span class="text-gold mt-0.5">&#10003;</span>
+            <span class="text-rose mt-0.5">&#10003;</span>
             <span>Unlimited guest messages</span>
           </li>
           <li class="flex items-start gap-3">
-            <span class="text-gold mt-0.5">&#10003;</span>
+            <span class="text-rose mt-0.5">&#10003;</span>
             <span>Custom QR code for your venue</span>
           </li>
           <li class="flex items-start gap-3">
-            <span class="text-gold mt-0.5">&#10003;</span>
+            <span class="text-rose mt-0.5">&#10003;</span>
             <span>Curated prompts for guests</span>
           </li>
           <li class="flex items-start gap-3">
-            <span class="text-gold mt-0.5">&#10003;</span>
+            <span class="text-rose mt-0.5">&#10003;</span>
             <span>Delivery on 1st, 5th, and 10th anniversary</span>
           </li>
           <li class="flex items-start gap-3">
-            <span class="text-gold mt-0.5">&#10003;</span>
+            <span class="text-rose mt-0.5">&#10003;</span>
             <span>Works on any phone, no app needed</span>
           </li>
           <li class="flex items-start gap-3">
-            <span class="text-gold mt-0.5">&#10003;</span>
+            <span class="text-rose mt-0.5">&#10003;</span>
             <span>Stored securely for 10 years</span>
           </li>
         </ul>
@@ -229,9 +236,9 @@
   </section>
 
   <!-- FAQ -->
-  <section class="py-20 px-6 bg-cream-dark">
+  <section class="py-24 px-6 bg-cream-dark">
     <div class="max-w-2xl mx-auto">
-      <h2 class="font-serif text-3xl md:text-4xl font-bold text-center mb-12">Questions</h2>
+      <h2 class="font-serif font-light text-3xl md:text-4xl text-center mb-12 text-ink">Questions</h2>
       <div class="space-y-4">
         <div class="bg-white rounded-xl">
           <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between px-6 py-5 text-left font-medium">
@@ -283,10 +290,10 @@
   </section>
 
   <!-- Signup Form -->
-  <section id="reserve" class="py-20 px-6">
+  <section id="reserve" class="py-24 px-6 bg-cream">
     <div class="max-w-md mx-auto text-center">
-      <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">Reserve your wedding date</h2>
-      <p class="text-ink-light mb-10">Be one of the first couples to use Toastjar. No payment required today.</p>
+      <h2 class="font-serif font-light text-3xl md:text-4xl mb-4 text-ink">Reserve your wedding date</h2>
+      <p class="text-ink-light mb-10 font-light">Be one of the first couples to use Toastjar. No payment required today.</p>
 
       <form id="signup-form" name="waitlist" method="POST" data-netlify="true" class="space-y-4 text-left">
         <input type="hidden" name="form-name" value="waitlist">
@@ -333,15 +340,32 @@
   </section>
 
   <!-- Footer -->
-  <footer class="py-10 px-6 border-t border-cream-dark">
-    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-ink-light">
-      <span class="font-serif text-ink font-semibold">Toastjar</span>
-      <span>Made with love for couples who want to remember.</span>
+  <footer class="paper-bg py-16 px-6">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-ink-mute font-light">
+      <span class="font-serif text-rose text-lg font-light">Toastjar</span>
+      <span>For couples who want to remember.</span>
       <span>&copy; 2026 Toastjar</span>
     </div>
   </footer>
 
   <script>
+    // Nav: transparent over hero, solid cream on scroll
+    (function() {
+      const nav = document.getElementById('site-nav');
+      const threshold = 40;
+      function updateNav() {
+        if (window.scrollY > threshold) {
+          nav.classList.add('bg-cream', 'border-ink-light/10', 'shadow-sm');
+          nav.classList.remove('bg-transparent', 'border-transparent');
+        } else {
+          nav.classList.add('bg-transparent', 'border-transparent');
+          nav.classList.remove('bg-cream', 'border-ink-light/10', 'shadow-sm');
+        }
+      }
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+    })();
+
     function toggleFaq(button) {
       const answer = button.nextElementSibling;
       const chevron = button.querySelector('.faq-chevron');

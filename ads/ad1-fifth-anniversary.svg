@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <defs>
+    <filter id="grain" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="2.2" numOctaves="2" seed="4" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.18  0 0 0 0 0.14  0 0 0 0 0.10  0 0 0 0.28 -0.08"/>
+    </filter>
+    <filter id="fibers" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="turbulence" baseFrequency="0.012 1.4" numOctaves="2" seed="9" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.22  0 0 0 0 0.18  0 0 0 0 0.12  0 0 0 0.10 -0.03"/>
+    </filter>
+    <filter id="warm" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="2" seed="14"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 0.96  0 0 0 0 0.88  0 0 0 0.09 -0.02"/>
+    </filter>
+  </defs>
+
+  <!-- Paper base -->
+  <rect width="1080" height="1080" fill="#E8E4DC"/>
+  <rect width="1080" height="1080" filter="url(#warm)"/>
+  <rect width="1080" height="1080" filter="url(#fibers)"/>
+  <rect width="1080" height="1080" filter="url(#grain)"/>
+
+  <!-- Tiny label -->
+  <text x="130" y="360" fill="#6B5D52" font-family="'DM Sans', Helvetica, sans-serif" font-size="13" letter-spacing="4">IMAGINE THIS</text>
+
+  <!-- Story, light serif -->
+  <g font-family="'Playfair Display', Georgia, serif" font-weight="300" fill="#3A2F2B">
+    <text x="130" y="430" font-size="30">It is your 5th wedding anniversary.</text>
+    <text x="130" y="510" font-size="30">You open your email.</text>
+    <text x="130" y="610" font-size="30">There are 40 messages from the people</text>
+    <text x="130" y="665" font-size="30">who were in the room that day.</text>
+    <text x="130" y="775" font-size="30" font-style="italic" fill="#8B5A6B">Some of them might not be around anymore.</text>
+  </g>
+
+  <!-- Wordmark bottom-left -->
+  <text x="60" y="1030" fill="#A8707F" font-family="'Playfair Display', Georgia, serif" font-size="14" font-weight="400">Toastjar</text>
+</svg>
