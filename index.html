@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Toastjar — Your Guests' Words, Delivered Years From Now</title>
+  <title>Toastjar - Your Guests' Words, Delivered Years From Now</title>
   <meta name="description" content="A digital time capsule for your wedding. Guests scan a QR code, write a heartfelt message, and you receive them on your 1st, 5th, and 10th anniversary.">
-  <meta property="og:title" content="Toastjar — Wedding Time Capsule">
+  <meta property="og:title" content="Toastjar - Wedding Time Capsule">
   <meta property="og:description" content="Your guests' words, delivered when they matter most. Messages collected at your wedding, delivered on your anniversaries.">
   <meta property="og:type" content="website">
   <link rel="icon" href="favicon.svg">
@@ -34,9 +34,21 @@
   <style>
     html { scroll-behavior: smooth; }
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-    .faq-answer.open { max-height: 200px; }
+    .faq-answer.open { max-height: 500px; }
     .faq-chevron { transition: transform 0.3s ease; }
     .faq-chevron.open { transform: rotate(180deg); }
+    /* Message card styles */
+    .msg-card { min-height: 48px; }
+    .msg-folded { padding: 24px 0; }
+    .msg-content { max-height: 0; overflow: hidden; transition: max-height 250ms ease-out; opacity: 0; }
+    .msg-inner { padding: 32px 0; }
+    .msg-text { font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: 16px; line-height: 1.65; letter-spacing: 0.003em; }
+    .msg-attr { font-size: 13px; color: #6B5D52; margin-top: 20px; }
+    .msg-name { font-size: 17px; }
+    .hairline { height: 1px; background: rgba(45, 41, 38, 0.08); }
+    @media (min-width: 768px) {
+      .msg-text { font-size: 17px; line-height: 1.65; letter-spacing: 0.003em; }
+    }
     /* Paper texture for editorial sections */
     .paper-bg {
       background-color: #E8E4DC;
@@ -70,8 +82,8 @@
   <nav id="site-nav" class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent border-b border-transparent">
     <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="#" class="font-serif text-xl font-bold text-rose">Toastjar</a>
-      <a href="#reserve" class="bg-rose text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-rose-dark transition-colors">
-        Get early access
+      <a href="#reserve" class="bg-rose text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-rose-dark transition-colors">
+        Reserve for $39
       </a>
     </div>
   </nav>
@@ -81,19 +93,158 @@
     <div class="max-w-4xl mx-auto px-6 md:px-16">
       <p class="text-xs font-sans tracking-[0.3em] text-ink-mute mb-12">A TIME CAPSULE FOR YOUR WEDDING</p>
       <h1 class="font-serif font-light text-ink text-3xl md:text-5xl leading-[1.5] md:leading-[1.4] mb-12 max-w-3xl">
-        Your guests have something to say to <em class="text-rose not-italic md:italic">future you.</em>
+        Hear from the people who were in the room.<br>
+        <span class="text-rose">Years later, when it matters most.</span>
       </h1>
       <p class="text-base md:text-lg text-ink-mute max-w-xl leading-relaxed mb-10 font-light">
-        Toastjar is a digital time capsule for your wedding. Guests scan a QR code, write a message, and you receive them on your 1st, 5th, and 10th anniversary.
+        A message from your grandmother, your best man, the college roommate who introduced you. Delivered one year, five years, and ten years after the wedding.
       </p>
+      <a href="#reserve" id="hero-cta" class="inline-block bg-rose text-white px-8 py-4 rounded-full text-base font-medium hover:bg-rose-dark transition-colors">
+        Reserve for $39
+      </a>
+    </div>
+  </section>
+
+  <!-- Anniversary Email Mockup (Interactive) -->
+  <section id="preview" class="py-20 md:py-28 px-6 bg-cream">
+    <div class="max-w-2xl mx-auto text-center mb-16">
+      <h2 class="font-serif font-light text-3xl md:text-4xl text-ink mb-4">Here's what you'll open on your first anniversary.</h2>
+      <p class="text-base text-ink-mute font-light">A year after your wedding, this arrives in your inbox.</p>
+    </div>
+
+    <div class="mx-auto" style="max-width: 640px;">
+      <!-- Email client frame -->
+      <div id="email-frame" class="bg-cream rounded-xl border border-cream-dark overflow-hidden" style="box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);">
+
+        <!-- Email header row (clickable) -->
+        <div id="email-header" onclick="toggleEmail()" class="px-5 md:px-8 py-4 md:py-5 cursor-pointer transition-colors duration-200 hover:bg-cream-dark/40 flex items-center gap-3" style="min-height: 48px;">
+          <!-- Unread dot -->
+          <div id="unread-dot" class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: #3B82F6;"></div>
+          <!-- Avatar -->
+          <div class="w-9 h-9 rounded-full bg-rose flex items-center justify-center flex-shrink-0">
+            <span class="text-white font-serif text-sm font-semibold">T</span>
+          </div>
+          <!-- Sender + subject -->
+          <div class="min-w-0 flex-1">
+            <p id="sender-name" class="text-sm text-ink font-semibold">Toastjar</p>
+            <p id="subject-line" class="text-sm text-ink truncate font-semibold">Your 1st anniversary messages from June 14, 2026</p>
+            <p class="text-ink-mute mt-0.5 truncate" style="font-size: 13px;">47 people left messages for you. Here they are.</p>
+          </div>
+          <!-- Date -->
+          <p class="text-xs text-ink-mute ml-2 flex-shrink-0">June 14, 2027</p>
+        </div>
+
+        <!-- Email body (hidden by default) -->
+        <div id="email-body" style="max-height: 0; overflow: hidden; transition: max-height 350ms ease-out; opacity: 0;">
+          <div class="border-t border-cream-dark">
+
+            <!-- Close button -->
+            <div class="flex justify-end px-5 md:px-8 pt-4">
+              <button onclick="toggleEmail()" class="font-sans text-sm text-ink-mute hover:text-ink transition-colors cursor-pointer bg-transparent border-none">Close email &#215;</button>
+            </div>
+
+            <div class="px-5 md:px-8 pb-8 md:pb-10 pt-4">
+
+              <!-- Toastjar branded header inside email -->
+              <div class="text-center mb-8">
+                <p class="font-serif text-rose text-lg font-light mb-1">Toastjar</p>
+                <p class="font-serif italic text-sm text-ink-mute">Your 1st anniversary, June 14, 2026</p>
+                <div class="w-12 h-px bg-ink-mute/30 mx-auto mt-4"></div>
+              </div>
+
+              <div style="max-width: 580px; margin: 0 auto;">
+
+              <p class="font-sans text-left text-sm text-ink-mute mb-10">Forty-seven people left something for you on your wedding day. Here are four of them.</p>
+
+              <!-- Guest messages (folded by default) -->
+
+                <div class="w-full hairline"></div>
+
+                <!-- Message 1: Priya -->
+                <div class="msg-card cursor-pointer" onclick="toggleMessage(this)" data-message="priya">
+                  <div class="msg-folded flex items-center justify-between">
+                    <p class="msg-name font-serif text-ink">Priya, Sarah's college roommate</p>
+                    <svg class="msg-chevron w-4 h-4 text-ink-mute flex-shrink-0 transition-transform duration-250" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </div>
+                  <div class="msg-content">
+                    <div class="msg-inner">
+                      <p class="msg-text text-ink">Sarah, I watched you stare at James during the first dance and I knew you'd stopped hearing the music. I hope you still look at him like that. Even when he's loading the dishwasher wrong.</p>
+                      <p class="msg-attr font-sans">Priya, Sarah's college roommate</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full hairline"></div>
+
+                <!-- Message 2: Marcus -->
+                <div class="msg-card cursor-pointer" onclick="toggleMessage(this)" data-message="marcus">
+                  <div class="msg-folded flex items-center justify-between">
+                    <p class="msg-name font-serif text-ink">Marcus, James's best man</p>
+                    <svg class="msg-chevron w-4 h-4 text-ink-mute flex-shrink-0 transition-transform duration-250" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </div>
+                  <div class="msg-content">
+                    <div class="msg-inner">
+                      <p class="msg-text text-ink">James, you asked me once if I thought you'd ever find someone who actually laughed at your jokes. I owe you $20. She laughed at all of them, even the bad ones. Especially the bad ones.</p>
+                      <p class="msg-attr font-sans">Marcus, James's best man</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full hairline"></div>
+
+                <!-- Message 3: Uncle Ray -->
+                <div class="msg-card cursor-pointer" onclick="toggleMessage(this)" data-message="uncle_ray">
+                  <div class="msg-folded flex items-center justify-between">
+                    <p class="msg-name font-serif text-ink">Uncle Ray</p>
+                    <svg class="msg-chevron w-4 h-4 text-ink-mute flex-shrink-0 transition-transform duration-250" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </div>
+                  <div class="msg-content">
+                    <div class="msg-inner">
+                      <p class="msg-text text-ink">We've been married 43 years. The first year is the easiest. Everything after is the real work and the real good stuff. I'm rooting for you both. Call your mother.</p>
+                      <p class="msg-attr font-sans">Uncle Ray</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full hairline"></div>
+
+                <!-- Message 4: Eileen (emotional climax) -->
+                <div class="msg-card cursor-pointer" onclick="toggleMessage(this)" data-message="eileen">
+                  <div class="msg-folded flex items-center justify-between">
+                    <p class="msg-name font-serif text-ink">Eileen, Sarah's aunt</p>
+                    <svg class="msg-chevron w-4 h-4 text-ink-mute flex-shrink-0 transition-transform duration-250" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </div>
+                  <div class="msg-content">
+                    <div class="msg-inner">
+                      <p class="msg-text text-ink">Watching Sarah walk down the aisle, I thought about your grandmother. She would have loved him. I love him too.</p>
+                      <p class="msg-attr font-sans">Eileen, Sarah's aunt</p>
+                    </div>
+                  </div>
+                </div>
+
+              <!-- More messages line -->
+              <p class="text-center text-sm text-ink-mute" style="margin-top: 32px;">+ 43 more messages</p>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Closing line + CTA -->
+    <div class="max-w-2xl mx-auto text-center mt-14">
+      <p class="font-serif italic text-lg md:text-xl text-ink mb-8 leading-relaxed">This is what you'll open on June 14, 2027. And again on your 5th. And again on your 10th.</p>
       <a href="#reserve" class="inline-block bg-rose text-white px-8 py-4 rounded-full text-base font-medium hover:bg-rose-dark transition-colors">
-        Get early access
+        Reserve for $39
       </a>
     </div>
   </section>
 
   <!-- How It Works -->
-  <section class="py-24 px-6 bg-cream">
+  <section class="py-24 px-6 bg-cream-dark">
     <div class="max-w-5xl mx-auto">
       <h2 class="font-serif font-light text-3xl md:text-4xl text-center mb-20 text-ink">How it works</h2>
       <div class="grid md:grid-cols-3 gap-12 md:gap-8">
@@ -165,72 +316,38 @@
     </div>
   </section>
 
-  <!-- Emotional Differentiator -->
-  <section class="paper-bg py-32 px-6">
-    <div class="max-w-4xl mx-auto px-6 md:px-16">
-      <p class="text-xs font-sans tracking-[0.3em] text-ink-mute mb-10">MORE THAN A GUEST BOOK</p>
-      <h2 class="font-serif font-light text-ink text-2xl md:text-4xl leading-[1.5] md:leading-[1.4] mb-10 max-w-3xl">
-        Guest books collect dust on a shelf. Toastjar delivers your loved ones' words at the exact moment you need to hear them, <em class="text-rose">years from now</em>.
-      </h2>
-      <p class="text-base md:text-lg text-ink-mute max-w-xl leading-relaxed font-light">
-        Guests get thoughtful prompts, not a blank page. That means real messages, not just "Congrats."
-      </p>
-    </div>
-  </section>
+  <!-- Pricing + Reservation Form -->
+  <section id="reserve" class="py-24 px-6 bg-cream">
+    <div class="max-w-lg mx-auto text-center">
+      <h2 class="font-serif font-light text-3xl md:text-4xl text-ink mb-8">$39 today. A voice you'll hear again in ten years.</h2>
+      <p class="font-sans text-sm text-ink-mute mb-10">One-time. Launching July 2026.</p>
 
-  <!-- Couple-to-Couple -->
-  <section class="paper-bg py-32 px-6 border-t border-ink-mute/10">
-    <div class="max-w-4xl mx-auto px-6 md:px-16">
-      <p class="text-xs font-sans tracking-[0.3em] text-ink-mute mb-10">AND FOR EACH OTHER</p>
-      <h2 class="font-serif font-light text-ink text-2xl md:text-4xl leading-[1.5] md:leading-[1.4] mb-10 max-w-3xl">
-        Before the ceremony, each of you writes a letter to the other, <em class="text-rose">sealed until your anniversary</em>.
-      </h2>
-      <p class="text-base md:text-lg text-ink-mute max-w-xl leading-relaxed font-light">
-        Read the words you wrote on the day you said "I do," years after you said it.
-      </p>
-    </div>
-  </section>
-
-  <!-- Pricing -->
-  <section id="pricing" class="py-24 px-6 bg-cream">
-    <div class="max-w-md mx-auto">
-      <h2 class="font-serif font-light text-3xl md:text-4xl text-center mb-4 text-ink">One payment. A decade of memories.</h2>
-      <p class="text-center text-ink-light mb-12 font-light">No subscriptions. No hidden fees.</p>
-      <div class="bg-white rounded-2xl shadow-sm border border-cream-dark p-8 text-center">
-        <div class="mb-1">
-          <span class="font-serif text-5xl font-bold text-rose">$39</span>
-          <span class="text-sm text-ink-light ml-1 line-through">$49</span>
+      <form id="signup-form" name="waitlist" method="POST" data-netlify="true" class="space-y-4 text-left">
+        <input type="hidden" name="form-name" value="waitlist">
+        <div>
+          <label for="email" class="block text-sm font-medium mb-1.5 text-ink-mute">Your email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="you@example.com"
+            class="w-full px-4 py-3 rounded-xl border border-cream-dark bg-white focus:outline-none focus:ring-2 focus:ring-rose/30 focus:border-rose transition-colors"
+          >
         </div>
-        <p class="text-xs text-rose font-medium mb-8 tracking-wider">EARLY ACCESS PRICING</p>
-        <ul class="text-left space-y-3 mb-8">
-          <li class="flex items-start gap-3">
-            <span class="text-rose mt-0.5">&#10003;</span>
-            <span>Unlimited guest messages</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-rose mt-0.5">&#10003;</span>
-            <span>Custom QR code for your venue</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-rose mt-0.5">&#10003;</span>
-            <span>Curated prompts for guests</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-rose mt-0.5">&#10003;</span>
-            <span>Delivery on 1st, 5th, and 10th anniversary</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-rose mt-0.5">&#10003;</span>
-            <span>Works on any phone, no app needed</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="text-rose mt-0.5">&#10003;</span>
-            <span>Stored securely for 10 years</span>
-          </li>
-        </ul>
-        <a href="#reserve" class="block w-full bg-rose text-white py-4 rounded-full font-semibold hover:bg-rose-dark transition-colors">
-          Get early access
-        </a>
+        <button
+          type="submit"
+          class="w-full bg-rose text-white py-4 rounded-full font-semibold text-lg hover:bg-rose-dark transition-colors mt-2"
+        >
+          Reserve for $39
+        </button>
+        <p class="text-xs text-center mt-3 text-ink-mute">We'll write to you in July, the week we open. Your $39 price will be waiting.</p>
+      </form>
+
+      <div id="signup-success" class="hidden">
+        <div class="bg-white rounded-2xl border border-cream-dark p-8">
+          <p class="font-serif text-xl md:text-2xl font-light italic text-ink leading-relaxed">You're on the list. We'll write to you in July, the week we open. Your $39 is waiting.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -264,7 +381,7 @@
             <svg class="faq-chevron w-5 h-5 text-ink-light flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-6">
-            <p class="pb-5 text-ink-light">Yes. One payment covers all three anniversary deliveries, unlimited guest messages, and secure storage for 10 years. No subscriptions, no hidden fees. The early bird price goes up to $49 after our initial launch.</p>
+            <p class="pb-5 text-ink-light">Yes. One payment covers all three anniversary deliveries, unlimited guest messages, and secure storage for 10 years. No subscriptions, no hidden fees.</p>
           </div>
         </div>
         <div class="bg-white rounded-xl">
@@ -284,56 +401,6 @@
           <div class="faq-answer px-6">
             <p class="pb-5 text-ink-light">Your messages are yours. If we ever wind down, we'll deliver all messages immediately and give you a full export of everything your guests wrote.</p>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Signup Form -->
-  <section id="reserve" class="py-24 px-6 bg-cream">
-    <div class="max-w-md mx-auto text-center">
-      <h2 class="font-serif font-light text-3xl md:text-4xl mb-4 text-ink">Join the waitlist</h2>
-      <p class="text-ink-light mb-10 font-light max-w-sm mx-auto leading-relaxed">Toastjar arrives this summer. Leave your email and we'll write to you when it's ready. Early signups keep the $39 price.</p>
-
-      <form id="signup-form" name="waitlist" method="POST" data-netlify="true" class="space-y-4 text-left">
-        <input type="hidden" name="form-name" value="waitlist">
-        <div>
-          <label for="email" class="block text-sm font-medium mb-1.5">Your email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            placeholder="you@example.com"
-            class="w-full px-4 py-3 rounded-xl border border-cream-dark bg-white focus:outline-none focus:ring-2 focus:ring-rose/30 focus:border-rose transition-colors"
-          >
-        </div>
-        <div>
-          <label for="wedding-date" class="block text-sm font-medium mb-1.5">Wedding date</label>
-          <input
-            type="date"
-            id="wedding-date"
-            name="wedding-date"
-            required
-            class="w-full px-4 py-3 rounded-xl border border-cream-dark bg-white focus:outline-none focus:ring-2 focus:ring-rose/30 focus:border-rose transition-colors"
-          >
-        </div>
-        <button
-          type="submit"
-          class="w-full bg-rose text-white py-4 rounded-full font-semibold text-lg hover:bg-rose-dark transition-colors mt-2"
-        >
-          Join the list
-        </button>
-        <p class="text-xs text-ink-light text-center mt-3">We'll only email you about Toastjar. No spam, ever.</p>
-      </form>
-
-      <div id="signup-success" class="hidden">
-        <div class="bg-white rounded-2xl border border-cream-dark p-8">
-          <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-rose/10 flex items-center justify-center">
-            <svg class="w-7 h-7 text-rose" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-          </div>
-          <h3 class="font-serif text-2xl font-light mb-2">You're on the list.</h3>
-          <p class="text-ink-light font-light">We'll write to you when Toastjar is ready.</p>
         </div>
       </div>
     </div>
@@ -369,6 +436,77 @@
       updateNav();
     })();
 
+    // Anniversary email mockup: open/close email
+    let mockupOpenedFired = false;
+    function toggleEmail() {
+      const body = document.getElementById('email-body');
+      const dot = document.getElementById('unread-dot');
+      const sender = document.getElementById('sender-name');
+      const subject = document.getElementById('subject-line');
+      const isOpen = body.style.maxHeight !== '0px' && body.style.maxHeight !== '';
+
+      if (isOpen) {
+        body.style.maxHeight = '0px';
+        body.style.opacity = '0';
+        dot.style.display = '';
+        sender.classList.add('font-semibold');
+        sender.classList.remove('font-medium');
+        subject.classList.add('font-semibold');
+        subject.classList.remove('font-normal');
+        const cards = document.querySelectorAll('.msg-card');
+        cards.forEach(function(card) {
+          const content = card.querySelector('.msg-content');
+          const folded = card.querySelector('.msg-folded');
+          const chevron = card.querySelector('.msg-chevron');
+          content.style.maxHeight = '0px';
+          content.style.opacity = '0';
+          folded.style.display = '';
+          chevron.style.transform = '';
+        });
+      } else {
+        // +2000 buffer accounts for child message cards that expand after the email opens
+        body.style.maxHeight = body.scrollHeight + 2000 + 'px';
+        body.style.opacity = '1';
+        dot.style.display = 'none';
+        sender.classList.remove('font-semibold');
+        sender.classList.add('font-medium');
+        subject.classList.remove('font-semibold');
+        subject.classList.add('font-normal');
+        // Plausible: mockup_opened (fire once)
+        if (!mockupOpenedFired && typeof plausible === 'function') {
+          plausible('mockup_opened');
+          mockupOpenedFired = true;
+        }
+      }
+    }
+
+    // Anniversary email mockup: fold/unfold message cards
+    function toggleMessage(card) {
+      const content = card.querySelector('.msg-content');
+      const folded = card.querySelector('.msg-folded');
+      const chevron = card.querySelector('.msg-chevron');
+      const isOpen = content.style.maxHeight !== '0px' && content.style.maxHeight !== '';
+
+      if (isOpen) {
+        content.style.maxHeight = '0px';
+        content.style.opacity = '0';
+        folded.style.display = '';
+        chevron.style.transform = '';
+      } else {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        content.style.opacity = '1';
+        folded.style.display = 'none';
+        chevron.style.transform = 'rotate(180deg)';
+        const body = document.getElementById('email-body');
+        body.style.maxHeight = body.scrollHeight + 2000 + 'px';
+        // Plausible: message_expanded
+        const messageName = card.getAttribute('data-message');
+        if (messageName && typeof plausible === 'function') {
+          plausible('message_expanded', { props: { message_name: messageName } });
+        }
+      }
+    }
+
     function toggleFaq(button) {
       const answer = button.nextElementSibling;
       const chevron = button.querySelector('.faq-chevron');
@@ -376,18 +514,51 @@
       chevron.classList.toggle('open');
     }
 
+    // Hero CTA click tracking
+    document.getElementById('hero-cta').addEventListener('click', function() {
+      if (typeof plausible === 'function') plausible('hero_cta_click');
+    });
+
+    // Scroll depth tracking (IntersectionObserver)
+    (function() {
+      let mockupFired = false;
+      let formFired = false;
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            if (entry.target.id === 'preview' && !mockupFired) {
+              mockupFired = true;
+              if (typeof plausible === 'function') plausible('scroll_depth_mockup');
+            }
+            if (entry.target.id === 'reserve' && !formFired) {
+              formFired = true;
+              if (typeof plausible === 'function') plausible('scroll_depth_form');
+            }
+          }
+        });
+      }, { threshold: 0.5 });
+
+      var preview = document.getElementById('preview');
+      var reserve = document.getElementById('reserve');
+      if (preview) observer.observe(preview);
+      if (reserve) observer.observe(reserve);
+    })();
+
+    // Form submission
     document.getElementById('signup-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       const form = e.target;
       const data = new FormData(form);
 
       try {
-        await fetch('/', {
+        const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(data).toString()
         });
+        if (!response.ok) throw new Error('Form submission failed');
         if (typeof fbq === 'function') fbq('track', 'Lead');
+        if (typeof plausible === 'function') plausible('form_submitted');
         form.classList.add('hidden');
         document.getElementById('signup-success').classList.remove('hidden');
       } catch (err) {
