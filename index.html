@@ -46,6 +46,12 @@
     .msg-attr { font-size: 13px; color: #6B5D52; margin-top: 20px; }
     .msg-name { font-size: 17px; }
     .hairline { height: 1px; background: rgba(45, 41, 38, 0.08); }
+    /* Pulse animation for unread email dot */
+    @keyframes unread-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5); }
+      50% { box-shadow: 0 0 0 6px rgba(59, 130, 246, 0); }
+    }
+    .unread-pulse { animation: unread-pulse 2s ease-in-out infinite; }
     @media (min-width: 768px) {
       .msg-text { font-size: 17px; line-height: 1.65; letter-spacing: 0.003em; }
     }
@@ -88,7 +94,7 @@
     <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="#" class="font-serif text-xl font-bold text-rose">Toastjar</a>
       <a href="#reserve" class="bg-rose text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-rose-dark transition-colors">
-        Reserve for $39
+        Join the waitlist
       </a>
     </div>
   </nav>
@@ -104,8 +110,8 @@
       <p class="text-base md:text-lg text-ink-mute max-w-xl leading-relaxed mb-10 font-light">
         A message from your grandmother, your best man, the college roommate who introduced you. Delivered one year, five years, and ten years after the wedding.
       </p>
-      <a href="#reserve" id="hero-cta" class="inline-block bg-rose text-white px-8 py-4 rounded-full text-base font-medium hover:bg-rose-dark transition-colors">
-        Reserve for $39
+      <a href="#preview" id="hero-cta" class="inline-block bg-rose text-white px-8 py-4 rounded-full text-base font-medium hover:bg-rose-dark transition-colors">
+        See what your anniversary looks like
       </a>
     </div>
   </section>
@@ -113,8 +119,7 @@
   <!-- Anniversary Email Mockup (Interactive) -->
   <section id="preview" class="py-20 md:py-28 px-6 bg-cream">
     <div class="max-w-2xl mx-auto text-center mb-16">
-      <h2 class="font-serif font-light text-3xl md:text-4xl text-ink mb-4">Here's what you'll open on your first anniversary.</h2>
-      <p class="text-base text-ink-mute font-light">A year after your wedding, this arrives in your inbox.</p>
+      <h2 class="font-serif font-light text-3xl md:text-4xl text-ink">Here's what you'll open on your first anniversary.</h2>
     </div>
 
     <div class="mx-auto" style="max-width: 640px;">
@@ -124,7 +129,7 @@
         <!-- Email header row (clickable) -->
         <div id="email-header" onclick="toggleEmail()" class="px-5 md:px-8 py-4 md:py-5 cursor-pointer transition-colors duration-200 hover:bg-cream-dark/40 flex items-center gap-3" style="min-height: 48px;">
           <!-- Unread dot -->
-          <div id="unread-dot" class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: #3B82F6;"></div>
+          <div id="unread-dot" class="w-2.5 h-2.5 rounded-full flex-shrink-0 unread-pulse" style="background-color: #3B82F6;"></div>
           <!-- Avatar -->
           <div class="w-9 h-9 rounded-full bg-rose flex items-center justify-center flex-shrink-0">
             <span class="text-white font-serif text-sm font-semibold">T</span>
@@ -239,11 +244,10 @@
       </div>
     </div>
 
-    <!-- Closing line + CTA -->
+    <!-- Closing CTA -->
     <div class="max-w-2xl mx-auto text-center mt-14">
-      <p class="font-serif italic text-lg md:text-xl text-ink mb-8 leading-relaxed">This is what you'll open on June 14, 2027. And again on your 5th. And again on your 10th.</p>
       <a href="#reserve" class="inline-block bg-rose text-white px-8 py-4 rounded-full text-base font-medium hover:bg-rose-dark transition-colors">
-        Reserve for $39
+        Join the waitlist
       </a>
     </div>
   </section>
@@ -324,8 +328,7 @@
   <!-- Pricing + Reservation Form -->
   <section id="reserve" class="py-24 px-6 bg-cream">
     <div class="max-w-lg mx-auto text-center">
-      <h2 class="font-serif font-light text-3xl md:text-4xl text-ink mb-8">$39 today. A voice you'll hear again in ten years.</h2>
-      <p class="font-sans text-sm text-ink-mute mb-10">One-time. Launching July 2026.</p>
+      <h2 class="font-serif font-light text-3xl md:text-4xl text-ink mb-8">Be the first to know when we launch.</h2>
 
       <form id="signup-form" name="waitlist" method="POST" data-netlify="true" class="space-y-4 text-left">
         <input type="hidden" name="form-name" value="waitlist">
@@ -344,14 +347,14 @@
           type="submit"
           class="w-full bg-rose text-white py-4 rounded-full font-semibold text-lg hover:bg-rose-dark transition-colors mt-2"
         >
-          Reserve for $39
+          Join the waitlist
         </button>
-        <p class="text-xs text-center mt-3 text-ink-mute">We'll write to you in July, the week we open. Your $39 price will be waiting.</p>
+        <p class="text-xs text-center mt-3 text-ink-mute">Launching summer 2026. We'll write to you when it's ready.</p>
       </form>
 
       <div id="signup-success" class="hidden">
         <div class="bg-white rounded-2xl border border-cream-dark p-8">
-          <p class="font-serif text-xl md:text-2xl font-light italic text-ink leading-relaxed">You're on the list. We'll write to you in July, the week we open. Your $39 is waiting.</p>
+          <p class="font-serif text-xl md:text-2xl font-light italic text-ink leading-relaxed">You're on the list. We'll write to you when Toastjar is ready.</p>
         </div>
       </div>
     </div>
@@ -382,11 +385,11 @@
         </div>
         <div class="bg-white rounded-xl">
           <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between px-6 py-5 text-left font-medium">
-            <span>Is this really just $39?</span>
+            <span>Will there be a subscription?</span>
             <svg class="faq-chevron w-5 h-5 text-ink-light flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-6">
-            <p class="pb-5 text-ink-light">Yes. One payment covers all three anniversary deliveries, unlimited guest messages, and secure storage for 10 years. No subscriptions, no hidden fees.</p>
+            <p class="pb-5 text-ink-light">No. It's a one-time payment when we launch. That covers all three anniversary deliveries, unlimited guest messages, and secure storage for 10 years.</p>
           </div>
         </div>
         <div class="bg-white rounded-xl">
